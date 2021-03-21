@@ -1,11 +1,10 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-
+import {Login} from './components/login/Login';
 function App() {
   return (
-   <h1>hi!</h1>
-  );
+    <Login/>
+    );
 }
 
 export default App;
