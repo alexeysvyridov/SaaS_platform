@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState} from 'react';
+//material ui
 import Container from '@material-ui/core/Container';
 import CssBaseLine from '@material-ui/core/CssBaseline';
 import {makeStyles} from '@material-ui/core/styles';
@@ -12,7 +13,9 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar'
-import Copyright from '@material-ui/core'
+
+
+// import CopyRight from '@material-ui/core'
 const useStyles = makeStyles((theme) => {
  return {
     paper: {
@@ -50,8 +53,20 @@ function CopyRight() {
     )
 }
 
-export const Login = () => {
+export const LoginForm = () => {
     const classes = useStyles()
+    const [input, setInput] = useState({
+        email: '',
+        password: ''
+    })
+
+    const handleSubmit = () => {
+        console.log('submit');
+    }
+    const handleInput = (e:React.ChangeEvent<HTMLInputElement>) => {
+        setInput({...input, [e.target.name]: e.target.value})
+    }
+
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseLine/>
@@ -62,35 +77,43 @@ export const Login = () => {
                 <Typography component="h1" variant="h5">
                     Sign in
                 </Typography>
-                <form className={classes.form} noValidate>
+                <form 
+                    className={classes.form} 
+                    noValidate
+                    onSubmit={e => e.preventDefault()}
+                >
                     <TextField
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
-                        name="Email"
-                        label="email"
+                        name="email"
+                        label="Email"
                         id="email"
                         autoComplete="email"
                         autoFocus
+                        onChange={handleInput}
+                        value={input.email}
                     />
                     <TextField
                         variant="outlined"
                         margin="normal"
+                        name="password"
                         required
                         fullWidth
-                        name="password"
                         label="Password"
                         id="password"
                         autoComplete="current-password"
+                        onChange={handleInput}
+                        value={input.password}
                     />
-                </form>
-                <FormControlLabel
+                {/* <FormControlLabel
                     control={<Checkbox value="remember" color="primary" />}
                     label="Remember me"
-                />
+                /> */}
                 <Button 
                     type="submit"
+                    onClick={handleSubmit}
                     fullWidth
                     variant="contained"
                     color="primary"
@@ -98,6 +121,7 @@ export const Login = () => {
                  >
                      Sign in
                  </Button>
+                </form>
                  <Grid container>
                      <Grid item xs>
                         <Link href="#" variant="body2">

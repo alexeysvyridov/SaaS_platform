@@ -1,9 +1,26 @@
-import React from 'react';
+import {Provider} from 'react-redux'
+
+import {LoginForm} from './components/loginForm/LoginForm';
+import {Home} from './components/home/Home'
+import {store} from './store'
+import {Switch, Redirect, BrowserRouter as Route } from 'react-router-dom'
+import {AuthRoute} from './components/hoc/AuthRoute'
 import './App.css';
-import {Login} from './components/login/Login';
+
+
 function App() {
   return (
-    <Login/>
+    <Provider store={store}>
+      <Route>
+      <Switch>
+        <AuthRoute path="/login" userType="guest" >
+          <LoginForm/>
+        </AuthRoute>
+        <AuthRoute path="/home" render={() => <Home/>} userType="private"/>
+        <Redirect from="*" to="/login"/>
+      </Switch>
+      </Route>
+    </Provider>
     );
 }
 
