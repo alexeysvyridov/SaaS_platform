@@ -9,7 +9,6 @@ interface AuthUser  {
 
 export const AuthRoute = (props:AuthUser) => {
     const { isLoggedIn=false, userType='private' } = props;
-    console.log(props);
     if(userType === 'guest' && isLoggedIn) return <Redirect to="home"/>
     else if(userType === 'private' && !isLoggedIn) return <Redirect to="login"/>
     return  <Route {...props} />

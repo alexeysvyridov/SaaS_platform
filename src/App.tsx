@@ -1,7 +1,7 @@
 import {Provider} from 'react-redux'
 
-import {LoginForm} from './components/loginForm/LoginForm';
-import {Home} from './components/home/Home'
+import {LoginForm} from './components/pages/loginForm/LoginForm';
+import {Home} from './components/pages/home/Home'
 import {store} from './store'
 import {Switch, Redirect, BrowserRouter as Route } from 'react-router-dom'
 import {AuthRoute} from './components/hoc/AuthRoute'

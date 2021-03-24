@@ -1,4 +1,6 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
+import {useSelector,useDispatch} from 'react-redux'
+import {useForm} from 'react-hook-form'
 //material ui
 import Container from '@material-ui/core/Container';
 import CssBaseLine from '@material-ui/core/CssBaseline';
@@ -8,12 +10,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar'
-
+import './LoginForm.css'
 
 // import CopyRight from '@material-ui/core'
 const useStyles = makeStyles((theme) => {
@@ -52,20 +52,24 @@ function CopyRight() {
         </Typography>
     )
 }
-
+type FormType = {
+    email: string,
+    password: string
+}
 export const LoginForm = () => {
     const classes = useStyles()
+    const {register, handleSubmit, errors} = useForm<FormType>()
     const [input, setInput] = useState({
         email: '',
         password: ''
     })
 
-    const handleSubmit = () => {
-        console.log('submit');
+    const onSubmit = (data: any) => {
+        console.log(data);
     }
-    const handleInput = (e:React.ChangeEvent<HTMLInputElement>) => {
-        setInput({...input, [e.target.name]: e.target.value})
-    }
+    // const handleInput = (e:React.ChangeEvent<HTMLInputElement>) => {
+       
+    // }
 
     return (
         <Container component="main" maxWidth="xs">
@@ -80,7 +84,7 @@ export const LoginForm = () => {
                 <form 
                     className={classes.form} 
                     noValidate
-                    onSubmit={e => e.preventDefault()}
+                    onSubmit={handleSubmit(onSubmit)}
                 >
                     <TextField
                         variant="outlined"
@@ -92,8 +96,7 @@ export const LoginForm = () => {
                         id="email"
                         autoComplete="email"
                         autoFocus
-                        onChange={handleInput}
-                        value={input.email}
+                        inputRef={register({required: "Email is Required",  minLength: {value: 8, message: "email is incorrect!"}})}
                     />
                     <TextField
                         variant="outlined"
@@ -104,16 +107,14 @@ export const LoginForm = () => {
                         label="Password"
                         id="password"
                         autoComplete="current-password"
-                        onChange={handleInput}
-                        value={input.password}
+                        inputRef={
+                            register(
+                                {required: "Password is Required", minLength: {value: 6, message: "Incorrect password, min length 6!"}}
+                                )
+                            }
                     />
-                {/* <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" />}
-                    label="Remember me"
-                /> */}
                 <Button 
                     type="submit"
-                    onClick={handleSubmit}
                     fullWidth
                     variant="contained"
                     color="primary"
@@ -122,7 +123,7 @@ export const LoginForm = () => {
                      Sign in
                  </Button>
                 </form>
-                 <Grid container>
+                 {/* <Grid container>
                      <Grid item xs>
                         <Link href="#" variant="body2">
                         Forgot password?
@@ -133,8 +134,10 @@ export const LoginForm = () => {
                             {"Don't have an account? Sign Up"}
                         </Link>
                      </Grid>
-                 </Grid>
+                 </Grid> */}
             </div>
+            {errors.email && <p className="error">{errors.email.message}</p>}
+            {errors.password && <p className="error">{errors.password.message}</p>}
             <Box mt={8}>
                 <CopyRight/>
             </Box>
