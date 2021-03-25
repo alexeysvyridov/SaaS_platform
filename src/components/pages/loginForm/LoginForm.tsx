@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {useSelector,useDispatch} from 'react-redux'
+// import {useSelector,useDispatch} from 'react-redux'
 import {useForm} from 'react-hook-form'
 //material ui
 import Container from '@material-ui/core/Container';
@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
+// import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar'
 import './LoginForm.css'
 
@@ -52,6 +52,7 @@ function CopyRight() {
         </Typography>
     )
 }
+
 type FormType = {
     email: string,
     password: string
@@ -59,17 +60,10 @@ type FormType = {
 export const LoginForm = () => {
     const classes = useStyles()
     const {register, handleSubmit, errors} = useForm<FormType>()
-    const [input, setInput] = useState({
-        email: '',
-        password: ''
-    })
 
     const onSubmit = (data: any) => {
-        console.log(data);
+        
     }
-    // const handleInput = (e:React.ChangeEvent<HTMLInputElement>) => {
-       
-    // }
 
     return (
         <Container component="main" maxWidth="xs">
@@ -96,7 +90,15 @@ export const LoginForm = () => {
                         id="email"
                         autoComplete="email"
                         autoFocus
-                        inputRef={register({required: "Email is Required",  minLength: {value: 8, message: "email is incorrect!"}})}
+                        inputRef={register(
+                        {
+                            required: "Email is Required", 
+                            pattern: {
+                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                message: "email is incorrect!"}
+                            }
+                        )
+                        }
                     />
                     <TextField
                         variant="outlined"
@@ -123,18 +125,6 @@ export const LoginForm = () => {
                      Sign in
                  </Button>
                 </form>
-                 {/* <Grid container>
-                     <Grid item xs>
-                        <Link href="#" variant="body2">
-                        Forgot password?
-                        </Link>
-                     </Grid>
-                     <Grid item>
-                        <Link href="#" variant="body2">
-                            {"Don't have an account? Sign Up"}
-                        </Link>
-                     </Grid>
-                 </Grid> */}
             </div>
             {errors.email && <p className="error">{errors.email.message}</p>}
             {errors.password && <p className="error">{errors.password.message}</p>}
