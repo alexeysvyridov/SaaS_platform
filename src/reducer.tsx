@@ -15,8 +15,10 @@ const defaultVal:StateValues = {
 
 export type LoggedIn = { type: typeof LOGIN_SUCCESS, payload: object }
 export type LoginFailure = { type: typeof LOGIN_FAILURE, error:  boolean }
- type actionTypes = LoggedIn | LoginFailure
-const reducer = (state:StateValues, action:actionTypes) => {
+
+type ActionTypes = LoggedIn | LoginFailure
+
+const reducer = (state:StateValues, action:ActionTypes) => {
     switch(action.type) {
         case 'LOGIN_SUCCESS': {
             return {

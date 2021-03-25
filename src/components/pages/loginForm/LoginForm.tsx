@@ -1,4 +1,5 @@
-import {useState} from 'react';
+import {useState,useEffect} from 'react';
+import { useDispatch } from 'react-redux';
 import {useForm} from 'react-hook-form'
 //material ui
 import Container from '@material-ui/core/Container';
@@ -13,6 +14,7 @@ import Link from '@material-ui/core/Link';
 import Avatar from '@material-ui/core/Avatar'
 import './LoginForm.css'
 
+import {fetchUser} from '../../../api'
 // import CopyRight from '@material-ui/core'
 const useStyles = makeStyles((theme) => {
  return {
@@ -58,9 +60,15 @@ type FormType = {
 export const LoginForm = () => {
     const classes = useStyles()
     const {register, handleSubmit, errors} = useForm<FormType>()
-
-    const onSubmit = (data: any) => {
-        
+    const dispatch = useDispatch()
+    const onSubmit = async(data: any) => {
+        try {
+            let res = await fetchUser(data)
+            console.log(res);
+            dispatch({type:"LOGIN_SUCCESS", res})
+        } catch (error) {
+            dispatch({type:"LOGIN_FAILURE", error:true})
+        }
     }
 
     return (
