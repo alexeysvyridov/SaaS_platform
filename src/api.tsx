@@ -1,22 +1,28 @@
 import {Dispatch} from 'redux'
 import {loginSuccess, loginFailure} from './actions/actions'
 import {LoggedIn} from './Models'
-type Actipons = LoggedIn | {type:string}
+type Actions = LoggedIn | {type:string}
+type User = {
+    username: string,
+    password: string
+}
+export const fetchUser = (user:User) => {
 
-export const fetchUser = (user:object) => {
-
-    return async(dispatch:Dispatch<Actipons>) => {
+    return async(dispatch:Dispatch<Actions>) => {
         try {   
-           let res = await fetch("http://localhost:3000/api/v1/auth/token", {
+           let res = await fetch("/api/v1/auth/token", {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: {
-                    'Accept':'application/json',
+                    'Accept': 'application/json',
                     'Content-Type': 'application/x-www-form-urlencoded',
-                    'Access-Control-Allow-Origin': '*'
                 },
-                body: JSON.stringify(user)
+                referrerPolicy: 'strict-origin-when-cross-origin',
+                
+                body: `grant_type=password&username=${user.username}&password=${user.password}`
             })
+            let response = await res.json()
+            localStorage.setItem('user', JSON.stringify(response))
             dispatch(loginSuccess(user));
 
         } catch (error) {
