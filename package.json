@@ -47,6 +47,7 @@
       "last 1 safari version"
     ]
   },
+  "proxy":"http://34.91.178.46:8000/",
   "devDependencies": {
     "@types/react-redux": "^7.1.16",
     "@types/react-router-dom": "^5.1.7"

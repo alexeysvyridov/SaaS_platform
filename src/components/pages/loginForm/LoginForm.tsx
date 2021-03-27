@@ -54,21 +54,15 @@ function CopyRight() {
 }
 
 type FormType = {
-    email: string,
+    username: string,
     password: string
 }
 export const LoginForm = () => {
     const classes = useStyles()
     const {register, handleSubmit, errors} = useForm<FormType>()
     const dispatch = useDispatch()
-    const onSubmit = async(data: any) => {
-        try {
-            let res = await fetchUser(data)
-            console.log(res);
-            dispatch({type:"LOGIN_SUCCESS", res})
-        } catch (error) {
-            dispatch({type:"LOGIN_FAILURE", error:true})
-        }
+    const onSubmit = (data: any) => {
+        dispatch(fetchUser(data));
     }
 
     return (
@@ -79,7 +73,7 @@ export const LoginForm = () => {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign in
+                  SmartOS  
                 </Typography>
                 <form 
                     className={classes.form} 
@@ -91,17 +85,17 @@ export const LoginForm = () => {
                         margin="normal"
                         required
                         fullWidth
-                        name="email"
-                        label="Email"
-                        id="email"
-                        autoComplete="email"
+                        name="username"
+                        label="Username"
+                        id="username"
+                        autoComplete="username"
                         autoFocus
                         inputRef={register(
                         {
-                            required: "Email is Required", 
+                            required: "Username is Required", 
                             pattern: {
                                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                message: "email is incorrect!"}
+                                message: "Umail is incorrect!"}
                             }
                         )
                         }
@@ -132,7 +126,7 @@ export const LoginForm = () => {
                  </Button>
                 </form>
             </div>
-            {errors.email && <p className="error">{errors.email.message}</p>}
+            {errors.username && <p className="error">{errors.username.message}</p>}
             {errors.password && <p className="error">{errors.password.message}</p>}
             <Box mt={8}>
                 <CopyRight/>

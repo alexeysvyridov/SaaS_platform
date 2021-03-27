@@ -1,23 +1,27 @@
 import {Dispatch} from 'redux'
-import {loginSuccess,loginFailure, LOGIN_SUCCESS, LOGIN_FAILURE} from './actions/actions'
+import {loginSuccess, loginFailure} from './actions/actions'
+import {LoggedIn} from './Models'
+type Actipons = LoggedIn | {type:string}
 
-type LoggedIn = { type: typeof LOGIN_SUCCESS, payload: object }
-type LoginFailure = { type: typeof LOGIN_FAILURE, error:  boolean }
+export const fetchUser = (user:object) => {
 
-export const fetchUser = async(user:object) => (dispatch:Dispatch<LoggedIn | LoginFailure>) => {
-        try {
-            fetch("api/v1/auth/token", {
+    return async(dispatch:Dispatch<Actipons>) => {
+        try {   
+           let res = await fetch("http://localhost:3000/api/v1/auth/token", {
                 method: 'POST',
+                mode: 'no-cors',
                 headers: {
-                    'Accept': 'application/x-www-form-urlencoded',
-                    'Content-Type': 'application/json'
+                    'Accept':'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Access-Control-Allow-Origin': '*'
                 },
                 body: JSON.stringify(user)
-            }).then((res) => {
-              
             })
+            dispatch(loginSuccess(user));
+
         } catch (error) {
             console.log(error);
-       
+            dispatch(loginFailure())
         }
+    }
 }

@@ -1,20 +1,10 @@
-import {Reducer} from 'redux'
-import {LOGIN_SUCCESS, LOGIN_FAILURE} from './actions/actions'
-type StateValues = {
-    isloggedIn: boolean;
-    user: object;
-    error: boolean; 
-}
+import {LoggedIn, LoginFailure, StateValues} from './Models'
 
 const defaultVal:StateValues = {
     isloggedIn: false,
     user: {},
     error: false 
 }
-
-
-export type LoggedIn = { type: typeof LOGIN_SUCCESS, payload: object }
-export type LoginFailure = { type: typeof LOGIN_FAILURE, error:  boolean }
 
 type ActionTypes = LoggedIn | LoginFailure
 
