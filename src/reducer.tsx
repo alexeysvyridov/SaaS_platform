@@ -8,15 +8,12 @@ const defaultVal:StateValues = {
 
 type ActionTypes = LoggedIn | LoginFailure | SignOut
 
-// const getToken = () => {
-//     const userToken =  JSON.parse(sessionStorage.getItem('user')!)
-//     return userToken
-// }
+
 const saveTokenToStorage = (userToken:object):void => {
-    sessionStorage.setItem('userToken', JSON.stringify(userToken))
+    localStorage.setItem('userToken', JSON.stringify(userToken))
  }
 const clearStorage = () => {
-    sessionStorage.removeItem('userToken')
+    localStorage.removeItem('userToken')
 }
 
 const reducer = (state:StateValues, action:ActionTypes) => {

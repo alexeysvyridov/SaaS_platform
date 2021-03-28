@@ -1,17 +1,19 @@
-import {Route, Redirect, RouteComponentProps  } from 'react-router-dom';
-import {useSelector} from 'react-redux'
+import {Route, Redirect, RouteComponentProps } from 'react-router-dom';
 interface AuthUser  {
     isLoggedIn?: boolean,
     userType: string,
     path: string,
     render?: (props:RouteComponentProps<any>) => React.ReactNode,
-    children?:React.ReactNode
+    children?:React.ReactNode,
+    exact?: boolean
 }
-
+const getToken = () => {
+    const userToken =  JSON.parse(localStorage.getItem('userToken')!)
+    return userToken
+}
 export const AuthRoute = (props:AuthUser) => {
-    const {isLoggedIn, user} = useSelector((store:any) => store.reducer) 
     const { userType } = props;
-    if(userType === 'guest' && isLoggedIn && user) return <Redirect to="/home"/>
-    else if(userType === 'private' && !isLoggedIn && !user) return <Redirect to="login"/>
+    if(userType === 'guest' && getToken()) return <Redirect to="/dashboard"/>
+    else if(userType === 'private' && !getToken()) return <Redirect to="login"/>
     return  <Route {...props} />
 }

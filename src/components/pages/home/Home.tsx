@@ -1,5 +1,8 @@
-import {useDispatch, useSelector} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import {BrowserRouter as Router, Switch, Route, Link, Redirect} from 'react-router-dom'
+
+
+//components
 import {Dashboard} from '../Dashboard/Dashboard';
 import {Events} from '../Events/Events';
 import {Admin} from '../Admin/Admin';
@@ -9,7 +12,6 @@ import {SignOutAction} from '../../../actions/actions'
 
 export const Home = () => {
     const dispatch = useDispatch()
-    const isLoggedIn = useSelector((state:any) => state.reducer.isLoggedIn)
     const signOut = () => {
         dispatch(SignOutAction())
     }
@@ -33,19 +35,11 @@ export const Home = () => {
               <button onClick={signOut}>Sign out</button>
           </div>
           <Switch>
-              <Route path="/dashboard">
-                <Dashboard/>
-              </Route>
-              <Route path="/events">
-                <Events/>
-              </Route>
-              <Route path="/monitors">
-                <Monitors/>
-              </Route>
-              <Route path="/admin">
-                <Admin/>
-              </Route>
-               <Redirect from="*" to="/dashboard"/>
+              <Route path="/dashboard" component={Dashboard}/>
+              <Route path="/events" component={Events}/>
+              <Route path="/monitors" component={Monitors}/>
+              <Route path="/admin" component={Admin}/>
+              <Route render={() => <Redirect from="*" to="/dashboard"/>}/>
           </Switch>
       </Router>
     )
