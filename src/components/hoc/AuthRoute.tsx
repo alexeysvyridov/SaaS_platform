@@ -11,7 +11,7 @@ interface AuthUser  {
 export const AuthRoute = (props:AuthUser) => {
     const {isLoggedIn, user} = useSelector((store:any) => store.reducer) 
     const { userType } = props;
-    if(userType === 'guest' && isLoggedIn) return <Redirect to="/home"/>
+    if(userType === 'guest' && isLoggedIn && user) return <Redirect to="/home"/>
     else if(userType === 'private' && !isLoggedIn && !user) return <Redirect to="login"/>
     return  <Route {...props} />
 }

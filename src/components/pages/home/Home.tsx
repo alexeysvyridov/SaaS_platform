@@ -6,10 +6,6 @@ import {Admin} from '../Admin/Admin';
 import {Monitors} from '../Monitors/Monitors';
 import {SignOutAction} from '../../../actions/actions'
 
-// const getToken = () => {
-//   const user = localStorage.getItem('user')
-//   const 
-// }
 
 export const Home = () => {
     const dispatch = useDispatch()

@@ -7,7 +7,6 @@ type User = {
     password: string
 }
 export const fetchUser = (user:User) => {
-
     return async(dispatch:Dispatch<Actions>) => {
         try {   
            let res = await fetch("/api/v1/auth/token", {
@@ -22,9 +21,7 @@ export const fetchUser = (user:User) => {
                 body: `grant_type=password&username=${user.username}&password=${user.password}`
             })
             let response = await res.json()
-            localStorage.setItem('user', JSON.stringify(response))
-            dispatch(loginSuccess(user));
-
+            dispatch(loginSuccess(response));
         } catch (error) {
             console.log(error);
             dispatch(loginFailure())

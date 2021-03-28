@@ -14,7 +14,6 @@ export const loginFailure = ():LoginFailure => {
 }
 export const SignOutAction = ():SignOut => {
     return {
-        type: SIGN_OUT,
-        isLoggedIn: false
+        type: SIGN_OUT
     }
 }

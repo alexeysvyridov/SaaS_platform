@@ -8,9 +8,22 @@ const defaultVal:StateValues = {
 
 type ActionTypes = LoggedIn | LoginFailure | SignOut
 
+// const getToken = () => {
+//     const userToken =  JSON.parse(sessionStorage.getItem('user')!)
+//     return userToken
+// }
+const saveTokenToStorage = (userToken:object):void => {
+    sessionStorage.setItem('userToken', JSON.stringify(userToken))
+ }
+const clearStorage = () => {
+    sessionStorage.removeItem('userToken')
+}
+
 const reducer = (state:StateValues, action:ActionTypes) => {
+    console.log(action);
     switch(action.type) {
-        case LOGIN_SUCCESS: {
+        case LOGIN_SUCCESS: {  
+            saveTokenToStorage(action.payload)
             return {
                 ...state,
                 user: action.payload,
@@ -25,9 +38,11 @@ const reducer = (state:StateValues, action:ActionTypes) => {
             }
         }
         case SIGN_OUT: {
+            clearStorage()
             return {
                 ...state,
-                isLoggedIn: action.isLoggedIn,
+                isLoggedIn: false,
+                user: null
             }
         }
         default:

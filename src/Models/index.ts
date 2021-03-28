@@ -17,5 +17,4 @@ export type LoginAndPassword = {
 
 export type SignOut = {
     type: typeof SIGN_OUT,
-    isLoggedIn: boolean
 }
