@@ -8,7 +8,6 @@ const defaultVal:StateValues = {
 
 type ActionTypes = LoggedIn | LoginFailure | SignOut
 
-
 const saveTokenToStorage = (userToken:object):void => {
     localStorage.setItem('userToken', JSON.stringify(userToken))
  }
@@ -17,7 +16,6 @@ const clearStorage = () => {
 }
 
 const reducer = (state:StateValues, action:ActionTypes) => {
-    console.log(action);
     switch(action.type) {
         case LOGIN_SUCCESS: {  
             saveTokenToStorage(action.payload)
